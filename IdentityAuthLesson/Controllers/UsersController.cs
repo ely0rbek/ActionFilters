@@ -17,13 +17,15 @@ namespace IdentityAuthLesson.Controllers
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly SignInManager<AppUser> _signInManager;
         private readonly IAuthService _authService;
 
-        public UsersController(UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager, IAuthService authService)
+        public UsersController(UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager, IAuthService authService, SignInManager<AppUser> signInManager)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _authService = authService;
+            _signInManager = signInManager;
         }
 
         [HttpPost]
@@ -79,6 +81,8 @@ namespace IdentityAuthLesson.Controllers
             {
                 return Unauthorized("Password invalid");
             }
+
+            var result = await _signInManager.PasswordSignInAsync(user: user, password: loginDTO.Password, isPersistent: false, lockoutOnFailure: false);
 
             // token kelishi kere
 

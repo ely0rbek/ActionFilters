@@ -1,4 +1,5 @@
 
+using IdentityAuthLesson.Filters;
 using IdentityAuthLesson.Models;
 using IdentityAuthLesson.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -15,7 +16,27 @@ namespace IdentityAuthLesson
     {
         public static void Main(string[] args)
         {
+            var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
             var builder = WebApplication.CreateBuilder(args);
+
+
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy(name: MyAllowSpecificOrigins,
+                                  policy =>
+                                  {
+                                      policy.AllowAnyOrigin()
+                                             .AllowAnyHeader()
+                                             .AllowAnyMethod();
+                                  });
+            });
+
+
+
+            //builder.Services.AddControllersWithViews(options =>
+            //{
+            //    options.Filters.Add(new Custom());
+            //});
 
             // Add services to the container.
 
@@ -109,6 +130,7 @@ namespace IdentityAuthLesson
 
             app.UseHttpsRedirection();
 
+            app.UseCors(MyAllowSpecificOrigins);
             app.UseAuthentication();
             app.UseAuthorization();
 

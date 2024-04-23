@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace IdentityAuthLesson.Migrations
 {
     [DbContext(typeof(ApplicationIdentityDbContext))]
-    [Migration("20240419060115_firstconnect")]
-    partial class firstconnect
+    [Migration("20240423050338_first")]
+    partial class first
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
